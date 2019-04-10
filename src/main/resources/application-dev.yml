@@ -1,0 +1,44 @@
+logging:
+  file: logs/pm.log
+  pattern:
+    console: '%d %-5level %logger : %msg%n'
+    file: '%d %-5level [%thread] %logger : %msg%n'
+  level:
+    org.springframework.web: WARN
+    in.indigenous.pm: DEBUG
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths:
+          - /**
+  liquibase:
+    change-log: classpath:liquibase-changeLog.xml
+    enabled: true
+    url: jdbc:mariadb://localhost:3306/pm
+    user: root
+    drop-first: false
+    contexts: dev
+  jpa: 
+    show-sql: true
+    database-platform: org.hibernate.dialect.MariaDB53Dialect
+server:
+  port: 8083
+  servlet:
+    context-path: /pm
+application:
+  name: Project Management
+  version: 0
+  major:
+    version: 0
+  minor:
+    version: 2
+  slogan: Quality Matters
+home:
+  title: Home

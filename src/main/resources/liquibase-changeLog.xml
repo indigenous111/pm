@@ -1,0 +1,97 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+	<includeAll path="db/changelog/" />
+
+	<changeSet author="abhijit.s"
+		id="create-table-org-30-03-2019">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="org" />
+			</not>
+		</preConditions>
+		<createTable tableName="org">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(200)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="description" type="varchar(20000)">
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="abhijit.s" id="loadData-org-30-03-2019"
+		runOnChange="true">
+		<loadUpdateData encoding="UTF-8"
+			file="db/liquibase/data/org/30-03-2019.csv" quotchar="'"
+			separator="," tableName="org" primaryKey="id">
+			<column name="id" type="numeric" />
+			<column name="name" type="string" />
+			<column name="description" type="string" />
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="abhijit.s"
+		id="create-table-project-status-master-30-03-2019">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="project_status_master" />
+			</not>
+		</preConditions>
+		<createTable tableName="project_status_master">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="status" type="varchar(200)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="abhijit.s"
+		id="loadData-project-status-master-30-03-2019" runOnChange="true">
+		<loadUpdateData encoding="UTF-8"
+			file="db/liquibase/data/project_status_master/30-03-2019.csv"
+			quotchar="'" separator="," tableName="project_status_master"
+			primaryKey="id">
+			<column name="id" type="numeric" />
+			<column name="status" type="string" />
+		</loadUpdateData>
+	</changeSet>
+	<changeSet author="abhijit.s"
+		id="create-table-project-30-03-2019">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="project" />
+			</not>
+		</preConditions>
+		<createTable tableName="project">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(200)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="organisation" type="bigint">
+			</column>
+			<column name="status" type="bigint">
+			</column>
+			<column name="description" type="varchar(20000)">
+			</column>
+			<column name="created_on" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="modified_on" type="timestamp">
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="abhijit.s"
+		id="addAutoIncrement-project-30-03-2019">
+		<addAutoIncrement columnDataType="bigint"
+			columnName="id" incrementBy="1" startWith="1" tableName="project" />
+	</changeSet>
+</databaseChangeLog>
